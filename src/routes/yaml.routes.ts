@@ -13,4 +13,10 @@ export const yamlRoutes = new Elysia({ prefix: '/yaml' })
         })
       })
     }
-  );
+  )
+  .post('/search', async ({ body }: any) => {
+    const { query } = body;
+    const embedding = await yamlController.openAIService.generateEmbedding(query);
+    return yamlController.dbService.findSimilarCapabilities(embedding);
+  });
+  ;

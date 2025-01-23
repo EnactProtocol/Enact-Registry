@@ -3,6 +3,7 @@ import { Context } from 'elysia';
 import { parse } from 'yaml';
 import { OpenAIService } from '../services/openai.service';
 import type { Capability, ProcessedCapability } from '../types/yaml.types';
+import { DatabaseService } from '@/services/db.service'
 
 interface FileUpload {
   file: Blob & {
@@ -13,10 +14,12 @@ interface FileUpload {
 }
 
 export class YamlController {
-  private openAIService: OpenAIService;
+  openAIService: OpenAIService;
+  dbService: DatabaseService;
 
   constructor() {
     this.openAIService = new OpenAIService();
+    this.dbService = new DatabaseService();
   }
 
   async processYaml(context: Context<{ body: FileUpload }>) {
@@ -66,6 +69,8 @@ export class YamlController {
         ...capability,
         embedding
       };
+      // Store in database
+      await this.dbService.storeCapability(processedCapability, content);
 
       return {
         message: 'Capability processed successfully',
