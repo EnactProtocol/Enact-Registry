@@ -1,0 +1,22 @@
+{
+  "name": "bun-api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "bun run src/server.ts",
+    "dev": "bun --watch run src/server.ts"
+  },
+  "dependencies": {
+    "@types/figlet": "^1.7.0",
+    "elysia": "latest",
+    "figlet": "^1.8.0",
+    "openai": "^4.80.0"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/server.ts",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
